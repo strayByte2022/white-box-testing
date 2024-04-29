@@ -1,3 +1,4 @@
+import time
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -39,6 +40,21 @@ class InitTesting(unittest.TestCase):
 
     def test_choose_course(self):
         self.choose_course()
+
+    def switch_button(self):
+        self.choose_course()
+        driver = self.driver
+        WebDriverWait(driver,5).until(
+            EC.presence_of_element_located((By.XPATH,"//div//input[@data-context='934']"))
+
+        )
+
+        button = driver.find_element(By.XPATH,"//div//input[@data-context='934']")
+        button.click()
+        time.sleep(20)
+    def test_switch_button(self):
+
+        self.switch_button()
 
     def tearDown(self):
         self.driver.close()
