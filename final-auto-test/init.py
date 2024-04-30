@@ -51,7 +51,7 @@ class InitTesting(unittest.TestCase):
 
         button = driver.find_element(By.XPATH,"//div//input[@data-context='934']")
         button.click()
-        time.sleep(10)
+        time.sleep(2)
 
     def test_switch_button(self):
 
@@ -60,12 +60,11 @@ class InitTesting(unittest.TestCase):
     def choose_edit_condition(self):
         self.switch_button()
         driver = self.driver
-        choose_completion_button = driver.find_element(By.XPATH,"//*[@id='dropwdownbutton_662fc49c9bf5f37']")
-        #//*[@id="dropwdownbutton_662fc56467dfd37"]
-
-        choose_completion_button.click()
+        completion_button = driver.find_elements(By.XPATH, "//button[@data-toggle='dropdown']")
+        completion_button[1].click()
         choose_edit_button = driver.find_element(By.XPATH,"//a[@class='btn btn-sm px-2 py-0' and contains(@href, 'https://school.moodledemo.net/course/modedit.php?update=562&showonly=activitycompletionheader')]")
         choose_edit_button.click()
+        time.sleep(2)
 
     def test_choose_edit_condition(self):
         self.choose_edit_condition()
