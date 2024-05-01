@@ -1,6 +1,7 @@
 import time
 import unittest
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -61,7 +62,7 @@ class InitTesting(unittest.TestCase):
         self.switch_button()
         driver = self.driver
         completion_button = driver.find_elements(By.XPATH, "//button[@data-toggle='dropdown']")
-        completion_button[2].click()
+        completion_button[1].click()
         choose_edit_button = driver.find_element(By.XPATH,"//a[@class='btn btn-sm px-2 py-0' and contains(@href, 'https://school.moodledemo.net/course/modedit.php?update=562&showonly=activitycompletionheader')]")
         choose_edit_button.click()
         time.sleep(2)
@@ -77,8 +78,11 @@ class InitTesting(unittest.TestCase):
     def unlock_completion_setting(self):
         self.choose_edit_condition()
         driver = self.driver
-        unlock_button = driver.find_element(By.ID,"id_unlockcompletion")
-        unlock_button.click()
+        try:
+            unlock_button = driver.find_element(By.ID, "id_unlockcompletion")
+            unlock_button.click()
+        except NoSuchElementException:
+            print("Unlock button not found. Already clicked or not available.")
 
     def test_case_no_completion_condition(self):
         self.unlock_completion_setting()
