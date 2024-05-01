@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 base_url = "https://school.moodledemo.net/login/index.php"
 username = "teacher"
@@ -101,14 +101,26 @@ class InitTesting(unittest.TestCase):
         self.case_stu_manually_mark_completion_no_reminder()
         self.save_and_return()
 
-    def stu_manually_mark_completion_reminder_enable(self):
+    def stu_manually_mark_completion_reminder_enable(self, date, month, year, hour, min):
         self.unlock_completion_setting()
         driver = self.driver
         enable_button = driver.find_element(By.ID,"id_completionexpected_enabled")
         enable_button.click()
+        # set date-month-year hour-min
+        date_box = Select(driver.find_element(By.ID,"id_completionexpected_day"))
+        date_box.select_by_value(date)
+        month_box = Select(driver.find_element(By.ID,"id_completionexpected_month"))
+        month_box.select_by_visible_text(month)
+        year_box = Select(driver.find_element(By.ID,"id_completionexpected_year"))
+        year_box.select_by_visible_text(year)
+
+        hour_box = Select(driver.find_element(By.ID,"id_completionexpected_hour"))
+        hour_box.select_by_visible_text(hour)
+        min_box = Select(driver.find_element(By.ID,"id_completionexpected_minute"))
+        min_box.select_by_visible_text(min)
 
     def test_case_stu_manually_mark_completion_reminder_normal_date(self):
-        self.stu_manually_mark_completion_reminder_enable()
+        self.stu_manually_mark_completion_reminder_enable('15', 'April', '2024', '00', '00')
         self.save_and_return()
 
     def tearDown(self):
