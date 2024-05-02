@@ -147,10 +147,12 @@ class InitTesting(unittest.TestCase):
 
     def test_case_stu_manually_mark_completion_reminder_year_of_2023(self):
         self.stu_manually_mark_completion_reminder_enable('15', 'April', '2023', '00', '00')
+
     def input_min_attempt(self,attempt):
         driver = self.driver
         minimum_attempt_input = driver.find_element(By.ID, "id_completionminattempts")
-        minimum_attempt_input.send_keys('1')
+        minimum_attempt_input.clear()
+        minimum_attempt_input.send_keys(attempt)
 
     def case_stu_manually_mark_completion_reminder_set_min_attempt(self,attempt):
         self.unlock_completion_setting()
@@ -164,6 +166,25 @@ class InitTesting(unittest.TestCase):
             minimum_attempt_checkbox.click()
             self.input_min_attempt(attempt)
         self.save_and_return()
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_minus_val(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(-1)
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_zero(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(0)
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_one(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(1)
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_max_val_lower_bound(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(9223372036854775806)
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_max_val_limit(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(9223372036854775807)
+
+    def test_case_stu_manually_mark_completion_reminder_set_min_attempt_max_val_upper_bound(self):
+        self.case_stu_manually_mark_completion_reminder_set_min_attempt(9223372036854775808)
+
     def tearDown(self):
         self.driver.close()
 
