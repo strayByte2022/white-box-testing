@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
+from input_discussion import TITLE_254,TITLE_255,TITLE_256
 base_url = "https://school.moodledemo.net/login/index.php"
 username = "teacher"
 password = "moodle"
@@ -185,6 +186,44 @@ class InitTesting(unittest.TestCase):
     def test_case_stu_manually_mark_completion_reminder_set_min_attempt_max_val_upper_bound(self):
         self.case_stu_manually_mark_completion_reminder_set_min_attempt(9223372036854775808)
 
+    # Test add discussion function from here
+
+    def enter_discussion_page(self):
+        self.choose_course()
+        driver = self.driver
+        class_discussion = driver.find_element(By.PARTIAL_LINK_TEXT, "Class discussions")
+        class_discussion.click()
+
+    def add_discussion(self):
+        self.enter_discussion_page()
+        driver = self.driver
+        add_discussion_button = driver.find_element(By.PARTIAL_LINK_TEXT,"Add discussion topic")
+        add_discussion_button.click()
+
+    def add_discussion_test_subject_limit(self,characters):
+        self.add_discussion()
+        driver = self.driver
+        subject_box = driver.find_element(By.ID,"id_subject")
+        subject_box.send_keys(characters)
+        time.sleep(10)
+        driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
+        p_element = driver.find_element(By.XPATH,"/html/body/p")
+
+        # Send text to the <p> tag element
+        p_element.send_keys("Your text here")
+        driver.switch_to.default_content()
+        post_to_forum = driver.find_element(By.ID,"id_submitbutton")
+        post_to_forum.click()
+        time.sleep(10)
+
+    def test_add_discussion_test_subject_limit_254(self):
+        self.add_discussion_test_subject_limit(TITLE_254)
+
+    def test_add_discussion_test_subject_limit_255(self):
+        self.add_discussion_test_subject_limit(TITLE_255)
+
+    def test_add_discussion_test_subject_limit_256(self):
+        self.add_discussion_test_subject_limit(TITLE_256)
     def tearDown(self):
         self.driver.close()
 
