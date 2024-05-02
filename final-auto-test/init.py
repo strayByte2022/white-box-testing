@@ -61,10 +61,11 @@ class InitTesting(unittest.TestCase):
     def choose_edit_condition(self):
         self.switch_button()
         driver = self.driver
-        completion_button = driver.find_elements(By.XPATH, "//button[@data-toggle='dropdown']")
-        completion_button[1].click()
-        choose_edit_button = driver.find_element(By.XPATH,"//a[@class='btn btn-sm px-2 py-0' and contains(@href, 'https://school.moodledemo.net/course/modedit.php?update=562&showonly=activitycompletionheader')]")
-        choose_edit_button.click()
+        # completion_button = driver.find_elements(By.XPATH, "//button[@data-toggle='dropdown']")
+        # completion_button[1].click()
+        # choose_edit_button = driver.find_element(By.XPATH,"//a[@class='btn btn-sm px-2 py-0' and contains(@href, 'https://school.moodledemo.net/course/modedit.php?update=562&showonly=activitycompletionheader')]")
+        # choose_edit_button.click()
+        self.driver.get('https://school.moodledemo.net/course/modedit.php?update=574&showonly=activitycompletionheader')
         time.sleep(2)
 
     def test_choose_edit_condition(self):
@@ -118,14 +119,53 @@ class InitTesting(unittest.TestCase):
         hour_box.select_by_visible_text(hour)
         min_box = Select(driver.find_element(By.ID,"id_completionexpected_minute"))
         min_box.select_by_visible_text(min)
+        self.save_and_return()
 
     def test_case_stu_manually_mark_completion_reminder_normal_date(self):
         self.stu_manually_mark_completion_reminder_enable('15', 'April', '2024', '00', '00')
-        self.save_and_return()
 
+    def test_case_stu_manually_mark_completion_reminder_28_Feb_leap_year(self):
+        self.stu_manually_mark_completion_reminder_enable('28', 'February', '2024', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_29_Feb_leap_year(self):
+        self.stu_manually_mark_completion_reminder_enable('29', 'February', '2024', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_30_Feb_leap_year(self):
+        self.stu_manually_mark_completion_reminder_enable('30', 'February', '2024', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_28_Feb_non_leap(self):
+        self.stu_manually_mark_completion_reminder_enable('28', 'February', '2023', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_29_Feb_non_leap(self):
+        self.stu_manually_mark_completion_reminder_enable('29', 'February', '2023', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_30_Feb_non_leap(self):
+        self.stu_manually_mark_completion_reminder_enable('30', 'February', '2023', '00', '00')
+
+    def test_case_stu_manually_mark_completion_reminder_31_April(self):
+        self.stu_manually_mark_completion_reminder_enable('31','April','2023','00','00')
+
+    def test_case_stu_manually_mark_completion_reminder_year_of_2023(self):
+        self.stu_manually_mark_completion_reminder_enable('15', 'April', '2023', '00', '00')
+    def input_min_attempt(self,attempt):
+        driver = self.driver
+        minimum_attempt_input = driver.find_element(By.ID, "id_completionminattempts")
+        minimum_attempt_input.send_keys('1')
+
+    def case_stu_manually_mark_completion_reminder_set_min_attempt(self,attempt):
+        self.unlock_completion_setting()
+        driver = self.driver
+        add_requirements_button = driver.find_element(By.ID,'id_completion_2')
+        add_requirements_button.click()
+        minimum_attempt_checkbox = driver.find_element(By.ID,"id_completionminattemptsenabled")
+        if minimum_attempt_checkbox.is_selected():
+            self.input_min_attempt(attempt)
+        else:
+            minimum_attempt_checkbox.click()
+            self.input_min_attempt(attempt)
+        self.save_and_return()
     def tearDown(self):
         self.driver.close()
-
 
 
 if __name__ == '__main__':
