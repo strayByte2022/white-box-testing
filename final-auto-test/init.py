@@ -1,5 +1,6 @@
 import time
 import unittest
+import os
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
@@ -200,7 +201,13 @@ class InitTesting(unittest.TestCase):
         add_discussion_button = driver.find_element(By.PARTIAL_LINK_TEXT,"Add discussion topic")
         add_discussion_button.click()
 
-    def add_discussion_test_subject_limit(self,characters):
+    def post_to_forum(self):
+
+        driver = self.driver
+        post_to_forum = driver.find_element(By.ID, "id_submitbutton")
+        post_to_forum.click()
+
+    def add_discussion_test_subject_limit(self,characters,messasge):
         self.add_discussion()
         driver = self.driver
         subject_box = driver.find_element(By.ID,"id_subject")
@@ -210,20 +217,48 @@ class InitTesting(unittest.TestCase):
         p_element = driver.find_element(By.XPATH,"/html/body/p")
 
         # Send text to the <p> tag element
-        p_element.send_keys("Your text here")
+        p_element.send_keys(messasge)
         driver.switch_to.default_content()
-        post_to_forum = driver.find_element(By.ID,"id_submitbutton")
-        post_to_forum.click()
+
         time.sleep(10)
 
     def test_add_discussion_test_subject_limit_254(self):
-        self.add_discussion_test_subject_limit(TITLE_254)
+        self.add_discussion_test_subject_limit(TITLE_254,"Hello World")
+        self.post_to_forum()
 
     def test_add_discussion_test_subject_limit_255(self):
-        self.add_discussion_test_subject_limit(TITLE_255)
+        self.add_discussion_test_subject_limit(TITLE_255,"Hello World")
+        self.post_to_forum()
 
     def test_add_discussion_test_subject_limit_256(self):
-        self.add_discussion_test_subject_limit(TITLE_256)
+        self.add_discussion_test_subject_limit(TITLE_256,"Hello World")
+        self.post_to_forum()
+
+    def test_add_discussion_test_empty_message(self):
+        self.add_discussion_test_subject_limit(TITLE_254, "")
+        self.post_to_forum()
+
+    def add_discussion_with_file(self,fileName):
+        driver = self.driver
+        self.add_discussion_test_subject_limit(TITLE_254,"Hello World")
+        advanced_button = driver.find_element(By.ID,"id_advancedadddiscussion")
+        advanced_button.click()
+        time.sleep(10)
+        upload_frame = driver.find_element(By.LINK_TEXT,"Add...")
+        upload_frame.click()
+        choose_file = driver.find_element(By.ID,"yui_3_18_1_1_1714647881945_1354")
+        choose_file.send_keys(os.getcwd()+f"final-auto-test/{fileName}")
+        self.post_to_forum()
+
+    def test_add_discussion_with_file_1mb(self):
+        self.add_discussion_with_file('file-1mb')
+
+    def test_add_discussion_with_file_2mb(self):
+        self.add_discussion_with_file('file-2mb')
+
+    def test_add_discussion_with_file_10kb(self):
+        self.add_discussion_with_file('file-10kb')
+
     def tearDown(self):
         self.driver.close()
 
