@@ -7,7 +7,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
-from input_discussion import TITLE_254,TITLE_255,TITLE_256
+from input_discussion import TITLE_254, TITLE_255, TITLE_256
+from selenium.webdriver.common.action_chains import ActionChains
+
 base_url = "https://school.moodledemo.net/login/index.php"
 username = "teacher"
 password = "moodle"
@@ -38,7 +40,7 @@ class InitTesting(unittest.TestCase):
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "History: Russia in Revolution"))
         )
-        course = driver.find_element(By.PARTIAL_LINK_TEXT,"History: Russia in Revolution")
+        course = driver.find_element(By.PARTIAL_LINK_TEXT, "History: Russia in Revolution")
         course.click()
 
     def test_choose_course(self):
@@ -47,12 +49,12 @@ class InitTesting(unittest.TestCase):
     def switch_button(self):
         self.choose_course()
         driver = self.driver
-        WebDriverWait(driver,5).until(
-            EC.presence_of_element_located((By.XPATH,"//div//input[@data-context='934']"))
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, "//div//input[@data-context='934']"))
 
         )
 
-        button = driver.find_element(By.XPATH,"//div//input[@data-context='934']")
+        button = driver.find_element(By.XPATH, "//div//input[@data-context='934']")
         button.click()
         time.sleep(2)
 
@@ -75,7 +77,7 @@ class InitTesting(unittest.TestCase):
 
     def save_and_return(self):
         driver = self.driver
-        save_button = driver.find_element(By.ID,"id_submitbutton2")
+        save_button = driver.find_element(By.ID, "id_submitbutton2")
         save_button.click()
 
     def unlock_completion_setting(self):
@@ -90,14 +92,14 @@ class InitTesting(unittest.TestCase):
     def test_case_no_completion_condition(self):
         self.unlock_completion_setting()
         driver = self.driver
-        none_button = driver.find_element(By.ID,"id_completion_0")
+        none_button = driver.find_element(By.ID, "id_completion_0")
         none_button.click()
         self.save_and_return()
 
     def case_stu_manually_mark_completion_no_reminder(self):
         self.unlock_completion_setting()
         driver = self.driver
-        manual_mark_button = driver.find_element(By.ID,"id_completion_1")
+        manual_mark_button = driver.find_element(By.ID, "id_completion_1")
         manual_mark_button.click()
 
     def test_case_stu_manually_mark_completion_no_reminder(self):
@@ -107,19 +109,19 @@ class InitTesting(unittest.TestCase):
     def stu_manually_mark_completion_reminder_enable(self, date, month, year, hour, min):
         self.unlock_completion_setting()
         driver = self.driver
-        enable_button = driver.find_element(By.ID,"id_completionexpected_enabled")
+        enable_button = driver.find_element(By.ID, "id_completionexpected_enabled")
         enable_button.click()
         # set date-month-year hour-min
-        date_box = Select(driver.find_element(By.ID,"id_completionexpected_day"))
+        date_box = Select(driver.find_element(By.ID, "id_completionexpected_day"))
         date_box.select_by_value(date)
-        month_box = Select(driver.find_element(By.ID,"id_completionexpected_month"))
+        month_box = Select(driver.find_element(By.ID, "id_completionexpected_month"))
         month_box.select_by_visible_text(month)
-        year_box = Select(driver.find_element(By.ID,"id_completionexpected_year"))
+        year_box = Select(driver.find_element(By.ID, "id_completionexpected_year"))
         year_box.select_by_visible_text(year)
 
-        hour_box = Select(driver.find_element(By.ID,"id_completionexpected_hour"))
+        hour_box = Select(driver.find_element(By.ID, "id_completionexpected_hour"))
         hour_box.select_by_visible_text(hour)
-        min_box = Select(driver.find_element(By.ID,"id_completionexpected_minute"))
+        min_box = Select(driver.find_element(By.ID, "id_completionexpected_minute"))
         min_box.select_by_visible_text(min)
         self.save_and_return()
 
@@ -145,23 +147,23 @@ class InitTesting(unittest.TestCase):
         self.stu_manually_mark_completion_reminder_enable('30', 'February', '2023', '00', '00')
 
     def test_case_stu_manually_mark_completion_reminder_31_April(self):
-        self.stu_manually_mark_completion_reminder_enable('31','April','2023','00','00')
+        self.stu_manually_mark_completion_reminder_enable('31', 'April', '2023', '00', '00')
 
     def test_case_stu_manually_mark_completion_reminder_year_of_2023(self):
         self.stu_manually_mark_completion_reminder_enable('15', 'April', '2023', '00', '00')
 
-    def input_min_attempt(self,attempt):
+    def input_min_attempt(self, attempt):
         driver = self.driver
         minimum_attempt_input = driver.find_element(By.ID, "id_completionminattempts")
         minimum_attempt_input.clear()
         minimum_attempt_input.send_keys(attempt)
 
-    def case_stu_manually_mark_completion_reminder_set_min_attempt(self,attempt):
+    def case_stu_manually_mark_completion_reminder_set_min_attempt(self, attempt):
         self.unlock_completion_setting()
         driver = self.driver
-        add_requirements_button = driver.find_element(By.ID,'id_completion_2')
+        add_requirements_button = driver.find_element(By.ID, 'id_completion_2')
         add_requirements_button.click()
-        minimum_attempt_checkbox = driver.find_element(By.ID,"id_completionminattemptsenabled")
+        minimum_attempt_checkbox = driver.find_element(By.ID, "id_completionminattemptsenabled")
         if minimum_attempt_checkbox.is_selected():
             self.input_min_attempt(attempt)
         else:
@@ -198,7 +200,7 @@ class InitTesting(unittest.TestCase):
     def add_discussion(self):
         self.enter_discussion_page()
         driver = self.driver
-        add_discussion_button = driver.find_element(By.PARTIAL_LINK_TEXT,"Add discussion topic")
+        add_discussion_button = driver.find_element(By.PARTIAL_LINK_TEXT, "Add discussion topic")
         add_discussion_button.click()
 
     def post_to_forum(self):
@@ -207,57 +209,63 @@ class InitTesting(unittest.TestCase):
         post_to_forum = driver.find_element(By.ID, "id_submitbutton")
         post_to_forum.click()
 
-    def add_discussion_test_subject_limit(self,characters,messasge):
+    def add_discussion_test_subject_limit(self, characters, messasge):
         self.add_discussion()
         driver = self.driver
-        subject_box = driver.find_element(By.ID,"id_subject")
+        subject_box = driver.find_element(By.ID, "id_subject")
         subject_box.send_keys(characters)
         time.sleep(10)
-        driver.switch_to.frame(driver.find_element(By.TAG_NAME,"iframe"))
-        p_element = driver.find_element(By.XPATH,"/html/body/p")
+        driver.switch_to.frame(driver.find_element(By.TAG_NAME, "iframe"))
+        p_element = driver.find_element(By.XPATH, "/html/body/p")
 
         # Send text to the <p> tag element
         p_element.send_keys(messasge)
         driver.switch_to.default_content()
 
-        time.sleep(10)
-
     def test_add_discussion_test_subject_limit_254(self):
-        self.add_discussion_test_subject_limit(TITLE_254,"Hello World")
+        self.add_discussion_test_subject_limit(TITLE_254, "Hello World")
         self.post_to_forum()
 
     def test_add_discussion_test_subject_limit_255(self):
-        self.add_discussion_test_subject_limit(TITLE_255,"Hello World")
+        self.add_discussion_test_subject_limit(TITLE_255, "Hello World")
         self.post_to_forum()
 
     def test_add_discussion_test_subject_limit_256(self):
-        self.add_discussion_test_subject_limit(TITLE_256,"Hello World")
+        self.add_discussion_test_subject_limit(TITLE_256, "Hello World")
         self.post_to_forum()
 
     def test_add_discussion_test_empty_message(self):
         self.add_discussion_test_subject_limit(TITLE_254, "")
         self.post_to_forum()
 
-    def add_discussion_with_file(self,fileName):
+    def add_discussion_with_file(self, fileName):
         driver = self.driver
-        self.add_discussion_test_subject_limit(TITLE_254,"Hello World")
-        advanced_button = driver.find_element(By.ID,"id_advancedadddiscussion")
+        self.add_discussion_test_subject_limit(TITLE_254, "Hello World")
+        advanced_button = driver.find_element(By.ID, "id_advancedadddiscussion")
         advanced_button.click()
-        time.sleep(10)
-        upload_frame = driver.find_element(By.LINK_TEXT,"Add...")
+        time.sleep(2)
+        upload_frame = driver.find_element(By.XPATH, "//a/i[@class='icon fa fa-file-o fa-fw ']")
         upload_frame.click()
-        choose_file = driver.find_element(By.ID,"yui_3_18_1_1_1714647881945_1354")
-        choose_file.send_keys(os.getcwd()+f"final-auto-test/{fileName}")
+        time.sleep(2)
+        choose_file = driver.find_element(By.XPATH, "//input[@type='file' and @name='repo_upload_file']")
+        choose_file.send_keys(os.getcwd() + f'\{fileName}')
+        time.sleep(10)
+        upload_this_file = driver.find_element(By.XPATH,"//button[@class='fp-upload-btn btn-primary btn']")
+        upload_this_file.click()
+        time.sleep(10)
         self.post_to_forum()
 
     def test_add_discussion_with_file_1mb(self):
         self.add_discussion_with_file('file-1mb')
 
+
     def test_add_discussion_with_file_2mb(self):
         self.add_discussion_with_file('file-2mb')
 
+
     def test_add_discussion_with_file_10kb(self):
         self.add_discussion_with_file('file-10kb')
+
 
     def tearDown(self):
         self.driver.close()
@@ -265,4 +273,3 @@ class InitTesting(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
