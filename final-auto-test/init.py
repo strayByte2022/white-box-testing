@@ -238,9 +238,9 @@ class InitTesting(unittest.TestCase):
         self.add_discussion_test_subject_limit(TITLE_254, "")
         self.post_to_forum()
 
-    def add_discussion_with_file(self, fileName):
+    def add_discussion_with_file(self,title,message, fileName):
         driver = self.driver
-        self.add_discussion_test_subject_limit(TITLE_254, "Hello World")
+        self.add_discussion_test_subject_limit(title,message)
         advanced_button = driver.find_element(By.ID, "id_advancedadddiscussion")
         advanced_button.click()
         time.sleep(2)
@@ -255,17 +255,15 @@ class InitTesting(unittest.TestCase):
         time.sleep(10)
         self.post_to_forum()
 
+    # test file upload limitation
     def test_add_discussion_with_file_1mb(self):
-        self.add_discussion_with_file('file-1mb')
-
+        self.add_discussion_with_file(TITLE_254,"Hello World",'file-1mb')
 
     def test_add_discussion_with_file_2mb(self):
-        self.add_discussion_with_file('file-2mb')
-
+        self.add_discussion_with_file(TITLE_254,"Hello World",'file-2mb')
 
     def test_add_discussion_with_file_10kb(self):
-        self.add_discussion_with_file('file-10kb')
-
+        self.add_discussion_with_file(TITLE_254,"Hello World",'file-10kb')
 
     def tearDown(self):
         self.driver.close()
