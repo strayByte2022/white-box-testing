@@ -1,0 +1,86 @@
+{
+  "base_url": "https://school.moodledemo.net/login/index.php",
+  "username": "teacher",
+  "password": "moodle",
+  "courseName": "History: Russia in Revolution",
+  "courseLink": "https://school.moodledemo.net/course/view.php?id=56",
+  "activityLink": "https://school.moodledemo.net/course/modedit.php?update=574&showonly=activitycompletionheader",
+
+   "normal_date": {
+      "date": "15",
+      "month": "April",
+      "year": "2024",
+      "hour": "00",
+      "min": "00"
+    },
+    "28_Feb_leap_year":{
+      "date": "28",
+      "month": "February",
+      "year": "2024",
+      "hour": "00",
+      "min": "00"
+    },
+    "29_Feb_leap_year":{
+      "date": "29",
+      "month": "April",
+      "year": "2024",
+      "hour": "00",
+      "min": "00"
+    },
+    "30_Feb_leap_year":{
+      "date": "30",
+      "month": "April",
+      "year": "2024",
+      "hour": "00",
+      "min": "00"
+    },
+    "28_Feb_non_leap":{
+      "date": "29",
+      "month": "April",
+      "year": "2023",
+      "hour": "00",
+      "min": "00"
+    },
+    "29_Feb_non_leap":{
+      "date": "30",
+      "month": "April",
+      "year": "2023",
+      "hour": "00",
+      "min": "00"
+    },
+    "30_Feb_non_leap":{
+      "date": "30",
+      "month": "February",
+      "year": "2023",
+      "hour": "00",
+      "min": "00"
+    },
+    "31_April":{
+      "date": "31",
+      "month": "April",
+      "year": "2023",
+      "hour": "00",
+      "min": "00"
+    },
+    "year_of_2023":{
+      "date": "15",
+      "month": "November",
+      "year": "2023",
+      "hour": "00",
+      "min": "00"
+    },
+    "reminder_date_list": [
+      {
+        "date": "15",
+      "month": "November",
+      "year": "2024",
+      "hour": "00",
+      "min": "00"
+      }
+    ],
+    "attempt_minus": -1,
+    "attempt_positive": 10,
+    "wrong_format_attempt": ["a",1.2],
+
+    "attempts": [1,-10,20]
+}

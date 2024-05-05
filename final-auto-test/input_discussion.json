@@ -1,0 +1,31 @@
+{
+  "base_url": "https://school.moodledemo.net/login/index.php",
+  "username": "teacher",
+  "password": "moodle",
+  "courseName": "History: Russia in Revolution",
+  "courseAlternative": "https://school.moodledemo.net/course/view.php?id=56",
+  "activityLink": "https://school.moodledemo.net/course/modedit.php?update=574&showonly=activitycompletionheader",
+  "case_n": {
+    "title": "Lorem ipsum",
+    "message": "Hello World",
+    "fileName": "file-10kb"
+  },
+  "case_254":
+  {
+    "title": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis",
+    "message": "Hello World",
+    "fileName": "file-10kb"
+  },
+  "case_255":
+  {
+    "title": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,",
+    "message": "Hello World",
+    "fileName": "file-10kb"
+  },
+  "case_256":
+  {
+    "title": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,,",
+    "message": "Hello World",
+    "fileName": "file-10kb"
+  }
+}
